@@ -6,7 +6,7 @@ import br.com.biblioteca.biblioteca.dto.usuario.UsuarioPostDto;
 import br.com.biblioteca.biblioteca.dto.usuario.UsuarioPutDto;
 import br.com.biblioteca.biblioteca.models.UsuarioModel;
 import br.com.biblioteca.biblioteca.response.Response;
-import br.com.biblioteca.biblioteca.service.UsuarioService;
+import br.com.biblioteca.biblioteca.service.UsuarioServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import java.util.List;
 public class UsuarioController {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioServiceImp usuarioServiceImp;
 
     @PostMapping("/")
     public ResponseEntity<Response<UsuarioGetDto>> cadastrarUsuario(@RequestBody UsuarioPostDto usuarioPostDto) {
@@ -27,7 +27,7 @@ public class UsuarioController {
         Response<UsuarioGetDto> response = new Response<>();
         try {
 
-            UsuarioModel usuarioModel = usuarioService.cadastrarUsuario(usuarioPostDto);
+            UsuarioModel usuarioModel = usuarioServiceImp.cadastrarUsuario(usuarioPostDto);
 
             response.setData(usuarioModel.toGetDto());
             response.setMessage("Sucesso ao cadastrar usuário");
@@ -49,7 +49,7 @@ public class UsuarioController {
         Response<UsuarioGetDto> response = new Response<>();
         try {
 
-            UsuarioModel usuarioModel = usuarioService.buscarUsuarioPorId(id);
+            UsuarioModel usuarioModel = usuarioServiceImp.buscarUsuarioPorId(id);
 
             response.setData(usuarioModel.toGetDto());
             response.setMessage("Sucesso ao buscar usuário");
@@ -71,7 +71,7 @@ public class UsuarioController {
         Response<List<UsuarioGetDto>> response = new Response<>();
         try {
 
-            List<UsuarioModel> usuarioModelList = usuarioService.buscarTodosUsuarios();
+            List<UsuarioModel> usuarioModelList = usuarioServiceImp.buscarTodosUsuarios();
             List<UsuarioGetDto> usuarioGetDtos = usuarioModelList.stream().map(UsuarioModel::toGetDto).toList();
 
             response.setData(usuarioGetDtos);
@@ -93,7 +93,7 @@ public class UsuarioController {
         Response<UsuarioGetDto> response = new Response<>();
         try {
 
-            UsuarioModel usuarioModel = usuarioService.atualizarUsuario(usuarioPutDto);
+            UsuarioModel usuarioModel = usuarioServiceImp.atualizarUsuario(usuarioPutDto);
 
             response.setData(usuarioModel.toGetDto());
             response.setMessage("Sucesso ao atualizar usuário");
@@ -115,7 +115,7 @@ public class UsuarioController {
         Response<UsuarioGetDto> response = new Response<>();
         try {
 
-            UsuarioModel usuarioModel = usuarioService.excluirUsuario(id);
+            UsuarioModel usuarioModel = usuarioServiceImp.excluirUsuario(id);
 
             response.setData(usuarioModel.toGetDto());
             response.setMessage("Sucesso ao deletar usuário");
